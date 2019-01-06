@@ -14,7 +14,7 @@ public class SubscriptionResolver implements GraphQLSubscriptionResolver {
         this.quotePublisher = quotePublisher;
     }
 
-    Publisher<QuoteDto> randomQuotes() {
+    Publisher<QuoteDto> randomQuote() {
         return quotePublisher.getPublisher();
     }
 
