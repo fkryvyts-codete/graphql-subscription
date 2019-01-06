@@ -1,5 +1,6 @@
-type MailMessageDto {
+type QuoteDto {
     text: String!
+    author: String!
 }
 
 schema {
@@ -9,10 +10,10 @@ schema {
 
 # The Root Query for the application
 type Query {
-    hello: MailMessageDto!
+    hello: QuoteDto!
 }
 
 # The Root Subscription for the application
 type Subscription {
-    mailMessages: MailMessageDto!
+    randomQuotes: QuoteDto!
 }

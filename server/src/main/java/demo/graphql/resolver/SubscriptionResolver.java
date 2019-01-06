@@ -3,19 +3,19 @@ package demo.graphql.resolver;
 import com.coxautodev.graphql.tools.GraphQLSubscriptionResolver;
 import org.reactivestreams.Publisher;
 import org.springframework.stereotype.Service;
-import demo.dto.MailMessageDto;
-import demo.graphql.publisher.MailMessagePublisher;
+import demo.dto.QuoteDto;
+import demo.graphql.publisher.QuotePublisher;
 
 @Service
 public class SubscriptionResolver implements GraphQLSubscriptionResolver {
-    private final MailMessagePublisher mailMessagePublisher;
+    private final QuotePublisher quotePublisher;
 
-    public SubscriptionResolver(MailMessagePublisher mailMessagePublisher) {
-        this.mailMessagePublisher = mailMessagePublisher;
+    public SubscriptionResolver(QuotePublisher quotePublisher) {
+        this.quotePublisher = quotePublisher;
     }
 
-    Publisher<MailMessageDto> mailMessages() {
-        return mailMessagePublisher.getPublisher();
+    Publisher<QuoteDto> randomQuotes() {
+        return quotePublisher.getPublisher();
     }
 
 }
