@@ -36,8 +36,8 @@ const client = new ApolloClient({
 });
 
 const QUOTES_SUBSCRIPTION = gql`
-  subscription onRandomQuote {
-    randomQuote{
+  subscription onRandomQuote($minimumLength: Int!) {
+    randomQuote(minimumLength: $minimumLength){
       text
       author
     }
@@ -50,8 +50,8 @@ const Quote = ({quote}) => (
   </div>
 );
 
-const RandomQuote = () => (
-  <Subscription query={QUOTES_SUBSCRIPTION}>
+const RandomQuote = ({minimumLength}) => (
+  <Subscription query={QUOTES_SUBSCRIPTION} variables={{minimumLength}}>
     {({ data, loading }) => (
       (!loading) ? <Quote quote={data.randomQuote} /> : null
     )}
@@ -62,7 +62,7 @@ const App = () => (
   <ApolloProvider client={client}>
     <div>
       <h2>Famous quotes</h2>
-      <RandomQuote />
+      <RandomQuote minimumLength={0}/>
     </div>
   </ApolloProvider>
 );

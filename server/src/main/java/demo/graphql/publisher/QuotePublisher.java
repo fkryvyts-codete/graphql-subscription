@@ -59,8 +59,8 @@ public class QuotePublisher {
         };
     }
 
-    public Flowable<QuoteDto> getPublisher() {
-        return publisher;
+    public Flowable<QuoteDto> getPublisher(Integer minimumLength) {
+        return publisher.filter(quoteDto -> quoteDto.getText().length() >= minimumLength);
     }
 
 }

@@ -15,5 +15,5 @@ type Query {
 
 # The Root Subscription for the application
 type Subscription {
-    randomQuote: QuoteDto!
+    randomQuote(minimumLength: Int): QuoteDto!
 }
