@@ -3,7 +3,7 @@ import { render } from "react-dom";
 
 import ApolloClient from "apollo-client";
 import { InMemoryCache } from 'apollo-cache-inmemory';
-import { ApolloProvider, Query, Subscription } from "react-apollo";
+import { ApolloProvider, Subscription } from "react-apollo";
 import gql from "graphql-tag";
 import { split } from 'apollo-link';
 import { HttpLink } from 'apollo-link-http';
