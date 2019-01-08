@@ -10,6 +10,8 @@ import { HttpLink } from 'apollo-link-http';
 import { WebSocketLink } from 'apollo-link-ws';
 import { getMainDefinition } from 'apollo-utilities';
 
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 const httpLink = new HttpLink({
   uri: 'http://localhost:8081/graphql'
 });
@@ -44,16 +46,22 @@ const QUOTES_SUBSCRIPTION = gql`
   }`;
 
 const Quote = ({quote}) => (
-  <div>
-    <h3>{quote.text}</h3>
-    <h4>{quote.author}</h4>
+  <div className="jumbotron">
+    <div className="display-4">{quote.text}</div>
+    <p>{quote.author}</p>
+  </div>
+);
+
+const LoadingMessage = () => (
+  <div class="alert alert-info" role="alert">
+    <strong>Waiting for new quote...</strong>
   </div>
 );
 
 const RandomQuote = ({minimumLength}) => (
   <Subscription query={QUOTES_SUBSCRIPTION} variables={{minimumLength}}>
     {({ data, loading }) => (
-      (!loading) ? <Quote quote={data.randomQuote} /> : null
+      (!loading) ? <Quote quote={data.randomQuote} /> : <LoadingMessage />
     )}
   </Subscription>
 );
@@ -72,13 +80,13 @@ class FilterableRandomQuote extends React.Component {
   render() {
     return (
       <div>
-        <label>
-          Minimum length:
-          <input type="number" min={0} value={this.state.minimumLength} onChange={this.handleChange} />
-        </label>
         <div>
           <RandomQuote minimumLength={this.state.minimumLength} />
         </div>
+        <label>
+          Minimum length:
+          <input className="form-control" type="number" min={0} value={this.state.minimumLength} onChange={this.handleChange} />
+        </label>
       </div>
     );
   }
@@ -86,8 +94,8 @@ class FilterableRandomQuote extends React.Component {
 
 const App = () => (
   <ApolloProvider client={client}>
-    <div>
-      <h2>Famous quotes</h2>
+    <div className="container">
+      <h3 className="text-muted">Famous quotes</h3>
       <FilterableRandomQuote />
     </div>
   </ApolloProvider>

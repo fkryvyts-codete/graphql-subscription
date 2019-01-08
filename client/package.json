@@ -15,6 +15,7 @@
     "apollo-client": "2.4.2",
     "apollo-link-http": "1.5.5 - latest",
     "apollo-link-ws": "^1.0.12",
+    "bootstrap": "^4.2.1",
     "graphql": "latest",
     "graphql-tag": "latest",
     "react": "16.2.0",
