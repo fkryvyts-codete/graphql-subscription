@@ -10,12 +10,10 @@ import { HttpLink } from 'apollo-link-http';
 import { WebSocketLink } from 'apollo-link-ws';
 import { getMainDefinition } from 'apollo-utilities';
 
-// Create an http link:
 const httpLink = new HttpLink({
   uri: 'http://localhost:8081/graphql'
 });
 
-// Create a WebSocket link:
 const wsLink = new WebSocketLink({
   uri: `ws://localhost:8081/subscriptions`,
   options: {
@@ -23,10 +21,7 @@ const wsLink = new WebSocketLink({
   }
 });
 
-// using the ability to split links, you can send data to each link
-// depending on what kind of operation is being sent
 const link = split(
-  // split based on operation type
   ({ query }) => {
     const { kind, operation } = getMainDefinition(query);
     return kind === 'OperationDefinition' && operation === 'subscription';
@@ -55,7 +50,7 @@ const Quote = ({quote}) => (
   </div>
 );
 
-const QuotesList = () => (
+const RandomQuote = () => (
   <Subscription query={QUOTES_SUBSCRIPTION}>
     {({ data, loading }) => (
       (!loading) ? <Quote quote={data.randomQuote} /> : null
@@ -67,7 +62,7 @@ const App = () => (
   <ApolloProvider client={client}>
     <div>
       <h2>Famous quotes</h2>
-      <QuotesList />
+      <RandomQuote />
     </div>
   </ApolloProvider>
 );
