@@ -58,11 +58,37 @@ const RandomQuote = ({minimumLength}) => (
   </Subscription>
 );
 
+class FilterableRandomQuote extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {minimumLength: 0};
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  handleChange(event) {
+    this.setState({minimumLength: parseInt(event.target.value || 0, 10)});
+  }
+
+  render() {
+    return (
+      <div>
+        <label>
+          Minimum length:
+          <input type="number" min={0} value={this.state.minimumLength} onChange={this.handleChange} />
+        </label>
+        <div>
+          <RandomQuote minimumLength={this.state.minimumLength} />
+        </div>
+      </div>
+    );
+  }
+}
+
 const App = () => (
   <ApolloProvider client={client}>
     <div>
       <h2>Famous quotes</h2>
-      <RandomQuote minimumLength={0}/>
+      <FilterableRandomQuote />
     </div>
   </ApolloProvider>
 );
