@@ -37,12 +37,12 @@ public class QuotePublisher {
     private final Flowable<QuoteDto> publisher;
 
     public QuotePublisher() {
-        Observable<QuoteDto> mailMessageObservable = Observable.create(emitter -> {
+        Observable<QuoteDto> quoteObservable = Observable.create(emitter -> {
             ScheduledExecutorService executorService = Executors.newScheduledThreadPool(1);
             executorService.scheduleAtFixedRate(broadcastMessage(emitter), 0, BROADCAST_RATE_SECONDS, TimeUnit.SECONDS);
         });
 
-        ConnectableObservable<QuoteDto> connectableObservable = mailMessageObservable.share().publish();
+        ConnectableObservable<QuoteDto> connectableObservable = quoteObservable.share().publish();
         connectableObservable.connect();
 
         publisher = connectableObservable.toFlowable(BackpressureStrategy.BUFFER);
