@@ -19,9 +19,11 @@ import java.util.concurrent.TimeUnit;
 
 @Service
 public class QuotePublisher {
-    private static final Logger logger = LoggerFactory.getLogger(QuotePublisher.class);
-    private static final Random rand = new Random();
-    private static final List<QuoteDto> messages = Arrays.asList(
+    private static final Integer BROADCAST_RATE_SECONDS = 5;
+
+    private final Logger logger = LoggerFactory.getLogger(QuotePublisher.class);
+    private final Random random = new Random();
+    private final List<QuoteDto> messages = Arrays.asList(
             new QuoteDto("Boldness be my friend", "William Shakespeare"),
             new QuoteDto("If it matters to you, you’ll find a way", "Charlie Gilkey"),
             new QuoteDto("If you’re going through hell, keep going", "Winston Churchill"),
@@ -37,7 +39,7 @@ public class QuotePublisher {
     public QuotePublisher() {
         Observable<QuoteDto> mailMessageObservable = Observable.create(emitter -> {
             ScheduledExecutorService executorService = Executors.newScheduledThreadPool(1);
-            executorService.scheduleAtFixedRate(newMessageTick(emitter), 0, 2, TimeUnit.SECONDS);
+            executorService.scheduleAtFixedRate(broadcastMessage(emitter), 0, BROADCAST_RATE_SECONDS, TimeUnit.SECONDS);
         });
 
         ConnectableObservable<QuoteDto> connectableObservable = mailMessageObservable.share().publish();
@@ -46,13 +48,13 @@ public class QuotePublisher {
         publisher = connectableObservable.toFlowable(BackpressureStrategy.BUFFER);
     }
 
-    private Runnable newMessageTick(ObservableEmitter<QuoteDto> emitter) {
+    private Runnable broadcastMessage(ObservableEmitter<QuoteDto> emitter) {
         return () -> {
-            QuoteDto message = messages.get(rand.nextInt(messages.size()));
+            QuoteDto message = messages.get(random.nextInt(messages.size()));
             try {
                 emitter.onNext(message);
             } catch (RuntimeException e) {
-                logger.error("Cannot send MailMessage", e);
+                logger.error("Cannot publish message", e);
             }
         };
     }
