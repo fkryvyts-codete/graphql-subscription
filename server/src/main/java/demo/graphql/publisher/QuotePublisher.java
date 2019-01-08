@@ -31,7 +31,8 @@ public class QuotePublisher {
             new QuoteDto("Go forth on your path, as it exists only through your walking", "Augustine of Hippo"),
             new QuoteDto("It does not matter how slowly you go as long as you do not stop", "Confucius"),
             new QuoteDto("The two most important days in your life are the day you are born and they day you find out why", "Mark Twain"),
-            new QuoteDto("Impossible is for the unwilling", "John Keats")
+            new QuoteDto("Impossible is for the unwilling", "John Keats"),
+            new QuoteDto("Hello world", "Me")
     );
 
     private final Flowable<QuoteDto> publisher;

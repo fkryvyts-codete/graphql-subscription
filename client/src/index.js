@@ -84,7 +84,7 @@ class FilterableRandomQuote extends React.Component {
           <RandomQuote minimumLength={this.state.minimumLength} />
         </div>
         <label>
-          Minimum length:
+          Minimum length of quote:
           <input className="form-control" type="number" min={0} value={this.state.minimumLength} onChange={this.handleChange} />
         </label>
       </div>
