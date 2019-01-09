@@ -14,4 +14,5 @@ This can be done by checking output of ```echo $JAVA_HOME``` command, which shou
  
 `client` - client-related code. Execute ```npm install``` inside this folder to install all necessary dependencies. After that run  ```npm start``` client app.
 Note, that you need to have both `nodejs` and `npm` [installed](https://nodejs.org/en/download/package-manager/) to do this.
+Recommended version for nodejs is `v8.9.1` or newer. For npm it is `5.5.1` or newer.
 
