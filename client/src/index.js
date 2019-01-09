@@ -54,7 +54,7 @@ const Quote = ({quote}) => (
 
 const LoadingMessage = () => (
   <div class="alert alert-info" role="alert">
-    <strong>Waiting for new quote...</strong>
+    <strong>Waiting for a new quote...</strong>
   </div>
 );
 
@@ -84,7 +84,7 @@ class FilterableRandomQuote extends React.Component {
           <RandomQuote minimumLength={this.state.minimumLength} />
         </div>
         <label>
-          Minimum length of quote:
+          Minimum quote length:
           <input className="form-control" type="number" min={0} value={this.state.minimumLength} onChange={this.handleChange} />
         </label>
       </div>
