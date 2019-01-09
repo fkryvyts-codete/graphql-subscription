@@ -59,7 +59,7 @@ const LoadingMessage = () => (
 );
 
 const RandomQuote = ({minimumLength}) => (
-  <Subscription query={QUOTES_SUBSCRIPTION} variables={{minimumLength}}>
+  <Subscription subscription={QUOTES_SUBSCRIPTION} variables={{minimumLength}}>
     {({ data, loading }) => (
       loading ? <LoadingMessage /> : <Quote quote={data.randomQuote} />
     )}
