@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import demo.dto.QuoteDto;
 
+import javax.annotation.PreDestroy;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
@@ -35,11 +36,12 @@ public class QuotePublisher {
             new QuoteDto("Hello world", "Me")
     );
 
+    private final ScheduledExecutorService executorService;
     private final Flowable<QuoteDto> publisher;
 
     public QuotePublisher() {
+        executorService = Executors.newSingleThreadScheduledExecutor();
         Observable<QuoteDto> quoteObservable = Observable.create(emitter -> {
-            ScheduledExecutorService executorService = Executors.newScheduledThreadPool(1);
             executorService.scheduleAtFixedRate(broadcastMessage(emitter), 0, BROADCAST_RATE_SECONDS, TimeUnit.SECONDS);
         });
 
@@ -62,6 +64,11 @@ public class QuotePublisher {
 
     public Flowable<QuoteDto> getPublisher(Integer minimumLength) {
         return publisher.filter(quoteDto -> quoteDto.getText().length() >= minimumLength);
+    }
+
+    @PreDestroy
+    public void performCleanup() {
+        executorService.shutdown();
     }
 
 }
