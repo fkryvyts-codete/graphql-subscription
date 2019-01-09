@@ -53,7 +53,7 @@ const Quote = ({quote}) => (
 );
 
 const LoadingMessage = () => (
-  <div class="alert alert-info" role="alert">
+  <div className="alert alert-info" role="alert">
     <strong>Waiting for a new quote...</strong>
   </div>
 );
