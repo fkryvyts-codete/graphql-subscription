@@ -3,11 +3,6 @@ type QuoteDto {
     author: String!
 }
 
-schema {
-    query: Query
-    subscription: Subscription
-}
-
 # The Root Query for the application
 type Query {
     hello: QuoteDto!
