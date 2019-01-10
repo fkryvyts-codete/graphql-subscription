@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>fkryvyts-codete</groupId>
-    <artifactId>graphql-subscripton</artifactId>
+    <artifactId>graphql-subscription</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <parent>

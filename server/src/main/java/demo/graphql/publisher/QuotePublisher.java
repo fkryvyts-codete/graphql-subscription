@@ -7,10 +7,10 @@ import io.reactivex.ObservableEmitter;
 import io.reactivex.observables.ConnectableObservable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.DisposableBean;
 import org.springframework.stereotype.Service;
 import demo.dto.QuoteDto;
 
-import javax.annotation.PreDestroy;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
@@ -19,7 +19,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 @Service
-public class QuotePublisher {
+public class QuotePublisher implements DisposableBean {
     private static final Integer BROADCAST_RATE_SECONDS = 5;
 
     private final Logger logger = LoggerFactory.getLogger(QuotePublisher.class);
@@ -66,9 +66,8 @@ public class QuotePublisher {
         return publisher.filter(quoteDto -> quoteDto.getText().length() >= minimumLength);
     }
 
-    @PreDestroy
-    public void performCleanup() {
+    @Override
+    public void destroy() {
         executorService.shutdown();
     }
-
 }
